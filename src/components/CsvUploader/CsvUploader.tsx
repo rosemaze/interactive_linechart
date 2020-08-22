@@ -17,8 +17,8 @@ export const CsvUploader: React.FC<Props> = (props) => {
         date: row.data[0],
         dataSource: row.data[1],
         campaign: row.data[2],
-        clicks: row.data[3],
-        impressions: row.data[4],
+        clicks: (row.data[3] && parseInt(row.data[3])) || 0,
+        impressions: (row.data[4] && parseInt(row.data[4])) || 0,
       };
     });
     // Remove header

@@ -6,7 +6,7 @@ import { MultiSelector } from "./components/MultiSelector/MultiSelector";
 import { getDataSourceOptions } from "./helpers/getDataSourceOptions";
 import { getCampaignOptions } from "./helpers/getCampaignOptions";
 import { getFilteredData } from "./helpers/getFilteredData";
-import { getUniqueDates } from "./helpers/getUniqueDates";
+// import { getUniqueDates } from "./helpers/getUniqueDates";
 import { LeftPane } from "./styles/LeftPane.style";
 import { RightPane } from "./styles/RightPane.style";
 import { DashboardWrapper } from "./styles/DashboardWrapper.style";
@@ -16,10 +16,12 @@ import {
   SELECT_ALL_OPTION,
 } from "./components/MultiSelector/MultiSelector.types";
 import { ClicksImpressionsChart } from "./components/ClicksImpressionsChart/ClicksImpressionsChart";
+import { Label } from "./styles/Label.style";
+import { Title } from "./styles/Title.style";
+import { getAggregatedClicksAndImpressions } from "./helpers/getAggregatedClicksAndImpressions";
 
 const App = () => {
   const [data, setData] = React.useState<Array<CsvRow>>();
-  const [filteredData, setFilteredData] = React.useState<Array<CsvRow>>();
   const [campaigns, setCampaigns] = React.useState<Array<SelectOption>>([]);
   const [datasources, setDatasources] = React.useState<Array<SelectOption>>([]);
   const [selectedDatasources, setSelectedDataSources] = React.useState<
@@ -30,6 +32,9 @@ const App = () => {
   >([]);
   const [xAxisDates, setXAxisDates] = React.useState<Array<Date>>([]);
   const [yAxisClicks, setYAxisClicks] = React.useState<Array<number>>([]);
+  const [yAxisImpressions, setYAxisImpressions] = React.useState<Array<number>>(
+    []
+  );
 
   React.useEffect(() => {
     if (!data) {
@@ -50,25 +55,41 @@ const App = () => {
         : [...selectedCampaigns];
 
     // Filter csv rows based on selected datasources and campaigns
-    const filtered = getFilteredData({
+    const filteredData = getFilteredData({
       datasourcesToFilter,
       campaignsToFilter,
       data,
     });
 
-    setFilteredData(filtered);
+    // Get x axis and y axis values based on aggregated clicks and impressions on filtered data
+    const aggregatedClicksAndImpressionsBasedOnFilters = getAggregatedClicksAndImpressions(
+      {
+        filteredData,
+      }
+    );
 
-    const xAxisDates = getUniqueDates(filtered);
-    setXAxisDates(xAxisDates);
+    setXAxisDates(
+      aggregatedClicksAndImpressionsBasedOnFilters.allFilteredDates
+    );
+    setYAxisClicks(
+      aggregatedClicksAndImpressionsBasedOnFilters.groupedAggregatedClicks
+    );
+    setYAxisImpressions(
+      aggregatedClicksAndImpressionsBasedOnFilters.groupedAggregatedImpressions
+    );
 
-    setYAxisClicks(xAxisDates.map((date) => Math.random() * Math.floor(20)));
+    console.log({ aggregatedClicksAndImpressionsBasedOnFilters });
 
-    console.log(filtered);
+    // const xAxisDates = getUniqueDates(filtered);
+    // setXAxisDates(xAxisDates);
+    // setYAxisClicks(xAxisDates.map((date) => Math.random() * Math.floor(20)));
   }, [
     selectedDatasources,
     selectedCampaigns,
     data,
     setXAxisDates,
+    setYAxisClicks,
+    setYAxisImpressions,
     datasources,
     campaigns,
   ]);
@@ -87,11 +108,14 @@ const App = () => {
     <>
       <DashboardWrapper>
         <LeftPane>
+          <Title>Filter dimension values</Title>
+          <Label>Datasources</Label>
           <MultiSelector
             options={datasources}
             selectedOptions={selectedDatasources}
             onHandleChange={setSelectedDataSources}
           />
+          <Label>Campaigns</Label>
           <MultiSelector
             options={campaigns}
             selectedOptions={selectedCampaigns}
@@ -102,7 +126,7 @@ const App = () => {
           <ClicksImpressionsChart
             xAxisDates={xAxisDates}
             yAxisClicks={yAxisClicks}
-            yAxisImpressions={[]}
+            yAxisImpressions={yAxisImpressions}
           />
         </RightPane>
       </DashboardWrapper>
