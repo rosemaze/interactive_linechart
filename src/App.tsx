@@ -7,11 +7,10 @@ import { getDataSourceOptions } from "./helpers/getDataSourceOptions";
 import { getCampaignOptions } from "./helpers/getCampaignOptions";
 import { getFilteredData } from "./helpers/getFilteredData";
 import { getUniqueDates } from "./helpers/getUniqueDates";
-import { getOptionsFromValues } from "./components/MultiSelector/helpers/getOptionsFromValues";
 import { LeftPane } from "./styles/LeftPane.style";
 import { RightPane } from "./styles/RightPane.style";
 import { DashboardWrapper } from "./styles/DashboardWrapper.style";
-import Select, { ValueType } from "react-select";
+import { ValueType } from "react-select";
 import {
   SelectOption,
   SELECT_ALL_OPTION,
