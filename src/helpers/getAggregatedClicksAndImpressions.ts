@@ -1,18 +1,21 @@
 import { CsvRow } from "../components/CsvUploader/CsvUploader.types";
 import { parseDate } from "./parseDate";
 
-// NOTE: This function works on the assumption that the data is ALREADY SORTED by dates as provided in the test data for this challenge!
+/*********
+ * NOTE: This function works on the assumption that the data is ALREADY SORTED by dates as provided in the test data for this challenge!
+ * For each row
+ * Take the date and compare it with the previous date
+ * If it is the same then add the clicks, and impressions to total clicks and total impressions
+ * If date is different then
+ * make a date item for the previous date, add to dateXAxes,
+ * add an item for previous aggregated total clicks to clicksYAxes
+ * add an item for previous aggregated total impressions to impressionsYAxes
+ */
+
 export const getAggregatedClicksAndImpressions = (options: {
   filteredData: CsvRow[];
 }) => {
   const { filteredData: data } = options;
-  // For each row
-  // Take the date and compare it with the previous date
-  // If it is the same then add the clicks, and impressions to total clicks and total impressions
-  // If date is different then
-  // make a date item for the previous date, add to dateXAxes,
-  // add an item for previous aggregated total clicks to clicksYAxes
-  // add an item for previous aggregated total impressions to impressionsYAxes
 
   let groupedAggregatedImpressions: number[] = [];
   let groupedAggregatedClicks: number[] = [];
@@ -37,9 +40,8 @@ export const getAggregatedClicksAndImpressions = (options: {
 
     // If current date is the same as previous date then add the clicks, and impressions to total clicks and total impressions
     if (currentDate === prevDate) {
-      totalClicksForCurrentDate = totalClicksForCurrentDate + row.clicks;
-      totalImpressionsForCurrentDate =
-        totalImpressionsForCurrentDate + row.impressions;
+      totalClicksForCurrentDate += row.clicks;
+      totalImpressionsForCurrentDate += row.impressions;
       return;
     }
 
@@ -59,7 +61,7 @@ export const getAggregatedClicksAndImpressions = (options: {
     prevDate = currentDate;
   });
 
-  // return
+  // Result
   return {
     groupedAggregatedImpressions,
     groupedAggregatedClicks,
