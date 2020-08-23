@@ -1,4 +1,3 @@
-// Todo make this generic with getUniqueDataSources
 import { CsvRow } from "../components/CsvUploader/CsvUploader.types";
 
 export const getCampaignOptions = (data: Array<CsvRow>) =>

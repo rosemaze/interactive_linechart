@@ -6,7 +6,6 @@ import { MultiSelector } from "./components/MultiSelector/MultiSelector";
 import { getDataSourceOptions } from "./helpers/getDataSourceOptions";
 import { getCampaignOptions } from "./helpers/getCampaignOptions";
 import { getFilteredData } from "./helpers/getFilteredData";
-// import { getUniqueDates } from "./helpers/getUniqueDates";
 import { LeftPane } from "./styles/LeftPane.style";
 import { RightPane } from "./styles/RightPane.style";
 import { DashboardWrapper } from "./styles/DashboardWrapper.style";
@@ -79,10 +78,6 @@ const App = () => {
     );
 
     console.log({ aggregatedClicksAndImpressionsBasedOnFilters });
-
-    // const xAxisDates = getUniqueDates(filtered);
-    // setXAxisDates(xAxisDates);
-    // setYAxisClicks(xAxisDates.map((date) => Math.random() * Math.floor(20)));
   }, [
     selectedDatasources,
     selectedCampaigns,
@@ -137,28 +132,3 @@ const App = () => {
 };
 
 export default App;
-
-/*React.useEffect(() => {
-    async function getData() {
-      const response = await fetch("/data/data.csv");
-
-      if (!response || !response.body) {
-        return;
-      }
-
-      const reader = response.body.getReader();
-      const result = await reader.read(); // raw array
-
-      console.log(result);
-      const decoder = new TextDecoder("utf-8");
-      const csv = decoder.decode(result.value); // the csv text
-
-      console.log(csv);
-      const results = Papa.parse(csv, { header: true }); // object with { data, errors, meta }
-      const rows = results.data; // array of objects
-      // setRows(rows);
-      console.log(rows);
-    }
-    getData();
-  }, []);
-  */

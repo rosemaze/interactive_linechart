@@ -8,19 +8,16 @@ interface Props {
 
 export const CsvUploader: React.FC<Props> = (props) => {
   const handleOnDrop = React.useCallback((data: any) => {
-    console.log("---------------------------");
-    console.log(data);
-    console.log("---------------------------");
-
     const csvRows: Array<CsvRow> = data.map((row: any) => {
       return {
         date: row.data[0],
         dataSource: row.data[1],
         campaign: row.data[2],
-        clicks: (row.data[3] && parseInt(row.data[3])) || 0,
+        clicks: (row.data[3] && parseInt(row.data[3])) || 0, // Handle undefined values
         impressions: (row.data[4] && parseInt(row.data[4])) || 0,
       };
     });
+
     // Remove header
     csvRows.shift();
 
