@@ -11,6 +11,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Drop a CSV file in to the upload area below the dashboard. The CSV file must be of the data specifications stated below.
 
+<img src="https://github.com/rosemaze/interactive_linechart/blob/master/src/data/images/screenshot.png" />
+
 ### Description of Project
 
 This project is an implementation of an interactive dashboard that displays a plotted line chart based on data uploaded via a CSV file.
@@ -19,11 +21,11 @@ This project is an implementation of an interactive dashboard that displays a pl
 
 The data structure must look like this:
 
-- Date (string in format dd.mm.yyyy)
-- Data source (string)
-- Campaign (string)
-- Clicks (numeric string or undefined)
-- Impressions (numeric string or undefined)
+- `Date` (string in format `dd.mm.yyyy`)
+- `Data` source (string)
+- `Campaign` (string)
+- `Clicks` (numeric string or `undefined`)
+- `Impressions` (numeric string or `undefined`)
 
 Processing the data
 
@@ -42,11 +44,11 @@ They can also use 'Select All' to use all options on either filters.
 
 Libraries
 
-- react-chartjs-2
+- `react-chartjs-2`
   Used to display the data plotted on a linechart
 
-- react-select
+- `react-select`
   Used for the multi selectable filters
 
-- react-papaparse
+- `react-papaparse`
   Used to read and parse the data from the uploaded CSV file
