@@ -9,7 +9,7 @@ In the project directory, you can run:
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Drop a CSV file in to the upload area below the dashboard. The CSV file must be of the data specifications stated below.
+Drop a CSV file in to the upload area below the dashboard. The CSV file must be of the data specifications stated below. (Example CSV file can be found in the `data` folder)
 
 <img src="https://github.com/rosemaze/interactive_linechart/blob/master/src/data/images/screenshot.png" />
 
